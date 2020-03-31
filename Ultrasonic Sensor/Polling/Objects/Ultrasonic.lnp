@@ -1,0 +1,5 @@
+".\Objects\main.obj",
+".\Objects\io.obj",
+".\Objects\lcd.obj" 
+TO ".\Objects\Ultrasonic" 
+PRINT(".\Listings\Ultrasonic.m51") RAMSIZE(256) 

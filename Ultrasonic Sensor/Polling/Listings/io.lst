@@ -1,0 +1,129 @@
+C51 COMPILER V9.60.0.0   IO                                                                03/31/2020 01:14:55 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE IO
+OBJECT MODULE PLACED IN .\Objects\io.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE io.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\io.lst
+                    -) TABS(2) OBJECT(.\Objects\io.obj)
+
+line level    source
+
+   1          /*............................
+   2          Name      :- Ultrasonic Sensor
+   3          Author    :- Abhishek Dongre
+   4          Date      :- 31-03-20
+   5          Time      :- 15:49
+   6          .......................*/
+   7          
+   8          
+   9          
+  10          #include "io.h"
+  11          #include "lcd.h"
+  12          
+  13          unsigned int DISTANCE = 0;
+  14          unsigned char i,Display[] = "Distance =";
+  15          
+  16          /*------------------------------- HARDWARE INITIALIZATION ------------------------------------------------
+             --------------*/
+  17          void HW_Init(void)
+  18          {
+  19   1          //LCD INITIALIZATION
+  20   1          Busy_check();
+  21   1          LCD_out(0,0x38);
+  22   1          Busy_check();
+  23   1          LCD_out(0,0x0E);
+  24   1          Busy_check();
+  25   1          LCD_out(0,0x01);
+  26   1          Busy_check();
+  27   1          LCD_out(0,0x80);
+  28   1        
+  29   1          for(i=0;Display[i]!='\0';i++)
+  30   1                  {
+  31   2                       Busy_check();
+  32   2                       LCD_out(1,Display[i]);
+  33   2                  }
+  34   1                  
+  35   1          //HARDWARE  INITIALIZATION    
+  36   1          TRIGGER = RESET;              //Configure as output  
+  37   1          TMOD = 0x91;  
+  38   1          TR1 = 1;
+  39   1          TH1 = 0x00;     TL1 = 0x00;
+  40   1          P3 |= 0x04;                   //Configure INT1 AS INPUT
+  41   1                  
+  42   1      }
+  43          
+  44          /*--------------------------Sending 10 us HIGH PULSE -----------------------------------------------------
+             -------*/
+  45           void UltraTRIGGER_10us(void)
+  46          {
+  47   1          TL1 = 0x00;   TH1 = 0x00;                   //TIMER 1
+  48   1          TL0 = 0xF6;   TH0 = 0xFF;                   //TIMER 0 10US
+  49   1          TRIGGER = SET;
+  50   1          TR0 = SET;
+  51   1          while(!TF0);            //Wait till overflow flag is set
+  52   1          TRIGGER = RESET;        //send low pulse
+C51 COMPILER V9.60.0.0   IO                                                                03/31/2020 01:14:55 PAGE 2   
+
+  53   1          TF0 = RESET;  TR0 = RESET;
+  54   1      }
+  55          
+  56          
+  57          /*--------------------------------ECHO RECEIVED ----------------------------------------------------------
+             -----------*/
+  58          unsigned int Ultra_ECHO(void)
+  59          {
+  60   1         unsigned int TIMER_VALUE = 0;
+  61   1         UltraTRIGGER_10us();
+  62   1         while(!INT1);                          //WAIT TILL LOW PULSE
+  63   1         while(INT1);                           //TIMER STARTS AND STOPS AFTER LOW PULSE
+  64   1        
+  65   1         TIMER_VALUE = ((TH1 << 8)| TL1);
+  66   1        
+  67   1         if(TIMER_VALUE < 38000)
+  68   1         {
+  69   2            DISTANCE = TIMER_VALUE / CMSETVALUE;    //CALCULATE DISTANCE IN CMS
+  70   2            
+  71   2           if(DISTANCE!=0)
+  72   2            {
+  73   3              Busy_check();
+  74   3              LCD_out(0,0x8A);
+  75   3              Busy_check();
+  76   3              LCD_out(1,(( DISTANCE / 100 )+ 48 ));
+  77   3              Busy_check();
+  78   3              LCD_out(1,((( DISTANCE / 10) % 10) + 48 ));
+  79   3              Busy_check();
+  80   3              LCD_out(1,((DISTANCE % 10 ) + 48));
+  81   3              Busy_check();
+  82   3              LCD_out(1,' ');
+  83   3              Busy_check();
+  84   3              LCD_out(1,'C');
+  85   3              Busy_check();
+  86   3              LCD_out(1,'M');
+  87   3            }
+  88   2         }
+  89   1         else
+  90   1         {
+  91   2           DISTANCE = 0;
+  92   2           Busy_check();
+  93   2           LCD_out(0,0x8B);
+  94   2           Busy_check();
+  95   2           LCD_out(1,(0+48));
+  96   2        }
+  97   1         return TIMER_VALUE;
+  98   1      }
+  99          
+ 100          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    323    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     14       2
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

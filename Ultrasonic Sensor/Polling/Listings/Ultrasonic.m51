@@ -1,0 +1,274 @@
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                    03/31/2020  01:14:56  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22.2.0, INVOKED BY:
+C:\KEIL_V5\C51\BIN\BL51.EXE .\Objects\main.obj, .\Objects\io.obj, .\Objects\lcd.obj TO .\Objects\Ultrasonic PRINT (.\Lis
+>> tings\Ultrasonic.m51) RAMSIZE (256)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  .\Objects\main.obj (MAIN)
+  .\Objects\io.obj (IO)
+  .\Objects\lcd.obj (LCD)
+  C:\KEIL_V5\C51\LIB\C51S.LIB (?C_STARTUP)
+  C:\KEIL_V5\C51\LIB\C51S.LIB (?C?UIDIV)
+  C:\KEIL_V5\C51\LIB\C51S.LIB (?C?SLCMP)
+  C:\KEIL_V5\C51\LIB\C51S.LIB (?C_INIT)
+
+
+LINK MAP OF MODULE:  .\Objects\Ultrasonic (MAIN)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     000EH     UNIT         ?DT?IO
+            DATA    0016H     0002H     UNIT         _DATA_GROUP_
+            IDATA   0018H     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+                    0003H     07FDH                  *** GAP ***
+            CODE    0800H     00D4H     UNIT         ?PR?ULTRA_ECHO?IO
+            CODE    08D4H     008CH     UNIT         ?C_C51STARTUP
+            CODE    0960H     006BH     UNIT         ?C?LIB_CODE
+            CODE    09CBH     0056H     UNIT         ?PR?HW_INIT?IO
+            CODE    0A21H     0020H     UNIT         ?PR?_DELAY?MAIN
+            CODE    0A41H     0019H     UNIT         ?PR?ULTRATRIGGER_10US?IO
+            CODE    0A5AH     0012H     UNIT         ?C_INITSEG
+            CODE    0A6CH     0012H     UNIT         ?PR?_LCD_OUT?LCD
+            CODE    0A7EH     000FH     UNIT         ?PR?MAIN?MAIN
+            CODE    0A8DH     000EH     UNIT         ?PR?BUSY_CHECK?LCD
+
+
+
+OVERLAY MAP OF MODULE:   .\Objects\Ultrasonic (MAIN)
+
+
+SEGMENT                            DATA_GROUP 
+  +--> CALLED SEGMENT            START    LENGTH
+------------------------------------------------
+?C_C51STARTUP                    -----    -----
+  +--> ?PR?MAIN?MAIN
+  +--> ?C_INITSEG
+
+?PR?MAIN?MAIN                    -----    -----
+  +--> ?PR?HW_INIT?IO
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  03/31/2020  01:14:56  PAGE 2
+
+
+  +--> ?PR?ULTRA_ECHO?IO
+  +--> ?PR?_DELAY?MAIN
+
+?PR?HW_INIT?IO                   -----    -----
+  +--> ?PR?BUSY_CHECK?LCD
+  +--> ?PR?_LCD_OUT?LCD
+
+?PR?ULTRA_ECHO?IO                0016H    0002H
+  +--> ?PR?ULTRATRIGGER_10US?IO
+  +--> ?PR?BUSY_CHECK?LCD
+  +--> ?PR?_LCD_OUT?LCD
+
+
+
+SYMBOL TABLE OF MODULE:  .\Objects\Ultrasonic (MAIN)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        MAIN
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0080H         PUBLIC        P0
+  D:00A0H         PUBLIC        P2
+  C:0A21H         PUBLIC        _delay
+  C:0A7EH         PUBLIC        main
+  -------         PROC          _DELAY
+  D:0006H         SYMBOL        msec
+  -------         DO            
+  D:0004H         SYMBOL        l
+  D:0002H         SYMBOL        k
+  -------         ENDDO         
+  C:0A21H         LINE#         12
+  C:0A21H         LINE#         13
+  C:0A21H         LINE#         15
+  C:0A2BH         LINE#         16
+  C:0A40H         LINE#         17
+  -------         ENDPROC       _DELAY
+  -------         PROC          MAIN
+  C:0A7EH         LINE#         19
+  C:0A7EH         LINE#         20
+  C:0A7EH         LINE#         22
+  C:0A81H         LINE#         24
+  C:0A81H         LINE#         25
+  C:0A81H         LINE#         27
+  C:0A84H         LINE#         28
+  C:0A8BH         LINE#         29
+  -------         ENDPROC       MAIN
+  -------         ENDMOD        MAIN
+
+  -------         MODULE        IO
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0080H         PUBLIC        P0
+  D:00A0H         PUBLIC        P2
+  D:00B0H         PUBLIC        P3
+  C:0800H         PUBLIC        Ultra_ECHO
+  C:09CBH         PUBLIC        HW_Init
+  B:00A0H.6       PUBLIC        TRIGGER
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  03/31/2020  01:14:56  PAGE 3
+
+
+  B:00B0H.3       PUBLIC        INT1
+  D:0089H         PUBLIC        TMOD
+  B:0088H.5       PUBLIC        TF0
+  D:008CH         PUBLIC        TH0
+  D:008DH         PUBLIC        TH1
+  D:0008H         PUBLIC        DISTANCE
+  C:0A41H         PUBLIC        UltraTRIGGER_10us
+  D:008AH         PUBLIC        TL0
+  D:008BH         PUBLIC        TL1
+  B:0088H.4       PUBLIC        TR0
+  B:0088H.6       PUBLIC        TR1
+  D:000AH         PUBLIC        Display
+  D:0015H         PUBLIC        i
+  -------         PROC          HW_INIT
+  C:09CBH         LINE#         17
+  C:09CBH         LINE#         18
+  C:09CBH         LINE#         20
+  C:09CEH         LINE#         21
+  C:09D5H         LINE#         22
+  C:09D8H         LINE#         23
+  C:09DFH         LINE#         24
+  C:09E2H         LINE#         25
+  C:09E9H         LINE#         26
+  C:09ECH         LINE#         27
+  C:09F3H         LINE#         29
+  C:09FEH         LINE#         30
+  C:09FEH         LINE#         31
+  C:0A01H         LINE#         32
+  C:0A0DH         LINE#         33
+  C:0A11H         LINE#         36
+  C:0A13H         LINE#         37
+  C:0A16H         LINE#         38
+  C:0A18H         LINE#         39
+  C:0A1DH         LINE#         40
+  C:0A20H         LINE#         42
+  -------         ENDPROC       HW_INIT
+  -------         PROC          ULTRATRIGGER_10US
+  C:0A41H         LINE#         45
+  C:0A41H         LINE#         46
+  C:0A41H         LINE#         47
+  C:0A46H         LINE#         48
+  C:0A4CH         LINE#         49
+  C:0A4EH         LINE#         50
+  C:0A50H         LINE#         51
+  C:0A53H         LINE#         52
+  C:0A55H         LINE#         53
+  C:0A59H         LINE#         54
+  -------         ENDPROC       ULTRATRIGGER_10US
+  -------         PROC          ULTRA_ECHO
+  -------         DO            
+  D:0016H         SYMBOL        TIMER_VALUE
+  -------         ENDDO         
+  C:0800H         LINE#         58
+  C:0800H         LINE#         59
+  C:0800H         LINE#         60
+  C:0805H         LINE#         61
+  C:0808H         LINE#         62
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  03/31/2020  01:14:56  PAGE 4
+
+
+  C:080BH         LINE#         63
+  C:080EH         LINE#         65
+  C:0818H         LINE#         67
+  C:082DH         LINE#         68
+  C:082DH         LINE#         69
+  C:083CH         LINE#         71
+  C:0845H         LINE#         72
+  C:0845H         LINE#         73
+  C:0848H         LINE#         74
+  C:084FH         LINE#         75
+  C:0852H         LINE#         76
+  C:0866H         LINE#         77
+  C:0869H         LINE#         78
+  C:0884H         LINE#         79
+  C:0887H         LINE#         80
+  C:089BH         LINE#         81
+  C:089EH         LINE#         82
+  C:08A5H         LINE#         83
+  C:08A8H         LINE#         84
+  C:08AFH         LINE#         85
+  C:08B2H         LINE#         86
+  C:08B4H         LINE#         87
+  C:08B4H         LINE#         88
+  C:08B6H         LINE#         90
+  C:08B6H         LINE#         91
+  C:08BBH         LINE#         92
+  C:08BEH         LINE#         93
+  C:08C5H         LINE#         94
+  C:08C8H         LINE#         95
+  C:08CFH         LINE#         96
+  C:08CFH         LINE#         97
+  C:08D3H         LINE#         98
+  -------         ENDPROC       ULTRA_ECHO
+  -------         ENDMOD        IO
+
+  -------         MODULE        LCD
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0080H         PUBLIC        P0
+  D:00A0H         PUBLIC        P2
+  C:0A8DH         PUBLIC        Busy_check
+  C:0A6CH         PUBLIC        _LCD_out
+  B:00A0H.2       PUBLIC        EN
+  B:00A0H.0       PUBLIC        RS
+  B:00A0H.1       PUBLIC        RW
+  B:0080H.7       PUBLIC        BUSY
+  -------         PROC          BUSY_CHECK
+  C:0A8DH         LINE#         12
+  C:0A8DH         LINE#         13
+  C:0A8DH         LINE#         14
+  C:0A8FH         LINE#         15
+  C:0A91H         LINE#         16
+  C:0A93H         LINE#         18
+  C:0A93H         LINE#         19
+  C:0A95H         LINE#         20
+  C:0A97H         LINE#         21
+  C:0A9AH         LINE#         22
+  -------         ENDPROC       BUSY_CHECK
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  03/31/2020  01:14:56  PAGE 5
+
+
+  -------         PROC          _LCD_OUT
+  D:0007H         SYMBOL        x
+  D:0005H         SYMBOL        y
+  C:0A6CH         LINE#         25
+  C:0A6CH         LINE#         26
+  C:0A6CH         LINE#         27
+  C:0A6EH         LINE#         28
+  C:0A71H         LINE#         29
+  C:0A75H         LINE#         31
+  C:0A77H         LINE#         32
+  C:0A79H         LINE#         33
+  C:0A7BH         LINE#         34
+  C:0A7DH         LINE#         35
+  -------         ENDPROC       _LCD_OUT
+  -------         ENDMOD        LCD
+
+  -------         MODULE        ?C?UIDIV
+  C:0960H         PUBLIC        ?C?UIDIV
+  -------         ENDMOD        ?C?UIDIV
+
+  -------         MODULE        ?C?SLCMP
+  C:09B5H         PUBLIC        ?C?SLCMP
+  -------         ENDMOD        ?C?SLCMP
+
+******************************************************************************
+* RESTRICTED VERSION WITH 0800H BYTE CODE SIZE LIMIT; USED: 01A3H BYTE (20%) *
+******************************************************************************
+
+Program Size: data=25.0 xdata=0 code=670
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)
