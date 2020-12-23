@@ -16,19 +16,19 @@ void Busy_check(void)
 			BUSY=1;
 			do
 			{
-         EN=0;
-         EN=1;
+         			EN=0;
+         			EN=1;
 			}while(BUSY==1);
-	}
+ }
 	
 /*---------------------------------LCD DISPLAY LOGIC--------------------------------------------------------------------------*/	
 void LCD_out(unsigned char x,unsigned char y)
 	{
 			RW=0;
 			if(x==0)
-          RS=0;
+         		 RS=0;
 			else 
-          RS=1;
+          		 RS=1;
 			LCD_PORT=y;
 			EN=1;
 			EN=0;
