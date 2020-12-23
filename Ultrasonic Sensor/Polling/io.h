@@ -13,7 +13,7 @@ Date 			:- 28-030-20
 #define RESET					        0
 #define CMSETVALUE		        59
 
-sbit TRIGGER = P2^6;				//Output Setting bits
+sbit TRIGGER = P2^6;				  //Output Setting bits
 //sbit ECHO		 = P3^3;				//Input Setting bits
 
 
