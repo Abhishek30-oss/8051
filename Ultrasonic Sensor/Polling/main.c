@@ -25,7 +25,7 @@ void main(void)
 		{
 			//GET_RANGE OF ULTRASONIC MODULE
 				Ultra_ECHO();
-			  delay(3);
+			        delay(3);
 		}
 }
 
